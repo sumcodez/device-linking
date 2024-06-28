@@ -1,6 +1,5 @@
 from settings import *
 from model import *
-from werkzeug.security import generate_password_hash, check_password_hash
 
 def add_user(username, passowrd, device_id):
     existing_user = User.query.filter_by(username=username).first()
