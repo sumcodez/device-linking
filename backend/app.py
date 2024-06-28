@@ -33,8 +33,11 @@ def logout():
     data = request.get_json()
     device_id = data['device_id']
     username = data['username']
+    print(device_id)
 
     result = perform_user_logout(username, device_id)
+
+    return result
 
 
 @app.route('/sessions', methods=['GET'])

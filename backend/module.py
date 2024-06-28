@@ -35,24 +35,34 @@ def perform_user_login(username, password, device_id):
     return jsonify({'message': 'Logged in successfully', 'user': {'username': user.username, 'devices': user.devices}}), 200
 
 
+
 def perform_user_logout(username, device_id):
     user = User.query.filter_by(username=username).first()
 
     if not user:
-        return jsonify({'error_message':'User not found'}), 401
+        return jsonify({'error_message': 'User not found'}), 401
     
-    if device_id in user.devices:
-        user.devices.remove(device_id)
+    try:
+        # Parse the string representation of the list into an actual list
+        devices = json.loads(user.devices)
+    except json.JSONDecodeError:
+        return jsonify({'error_message': 'Error parsing devices list'}), 500
+
+    if device_id in devices:
+        devices.remove(device_id)
+        user.devices = json.dumps(devices)  # Convert the list back to a JSON string
         db.session.commit()
-        return jsonify({'success_message':'Logged out successfully'}), 200
+        return jsonify({'success_message': 'Logged out successfully'}), 200
     
-    return jsonify({'error_message':'Device not found'}), 404
+    return jsonify({'error_message': 'Device not found'}), 404
 
 
 def retrieve_user_sessions(username):
     user = User.query.filter_by(username=username).first()
 
+    devices = json.loads(user.devices)
+
     if not user:
         return jsonify({'message': 'User not found'}), 404
 
-    return jsonify({'device_ids': user.devices}), 200
+    return jsonify({'device_ids': devices}), 200

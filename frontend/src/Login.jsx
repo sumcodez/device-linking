@@ -11,7 +11,7 @@ const Login = ({ setLoggedIn }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const device_id = localStorage.getItem('device_id');
-    //localStorage.setItem('device_id', device_id); // Store device_id in local storage
+    localStorage.setItem('device_id', device_id); // Store device_id in local storage
     const response = await login(username, password, device_id);
     if (response.message === 'Logged in successfully') {
       localStorage.setItem('username', username);
