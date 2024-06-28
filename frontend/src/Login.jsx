@@ -13,6 +13,7 @@ const Login = ({ setLoggedIn }) => {
     const device_id = localStorage.getItem('device_id');
     localStorage.setItem('device_id', device_id); // Store device_id in local storage
     const response = await login(username, password, device_id);
+    console.log("Login API response", response);
     if (response.message === 'Logged in successfully') {
       localStorage.setItem('username', username);
       setLoggedIn(true);
