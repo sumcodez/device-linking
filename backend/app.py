@@ -8,9 +8,11 @@ def register():
     data = request.get_json()
     username = data['username']
     password = data['password']
-    device_id = str(uuid.uuid4())
+    #device_id = str(uuid.uuid4())
 
-    result = add_user(username, password, device_id)
+    #result = add_user(username, password, device_id)
+
+    result = add_user(username, password)
 
     return result
 
@@ -20,7 +22,14 @@ def login():
     data = request.get_json()
     username = data['username']
     password = data['password']
-    device_id = data['device_id']
+    # device_id = data['device_id']
+    
+    if 'device_id' in data:
+        device_id = data['device_id']
+    else:
+        device_id = str(uuid.uuid4())
+
+    print("This is device ID",device_id)
 
     result = perform_user_login(username, password, device_id)     
 

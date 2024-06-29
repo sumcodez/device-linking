@@ -1,17 +1,30 @@
 from settings import *
 from model import *
 
-def add_user(username, passowrd, device_id):
+# def add_user(username, passowrd, device_id):
+#     existing_user = User.query.filter_by(username=username).first()
+
+#     if existing_user:
+#         return jsonify({"error_message":"User already exists"}), 400
+    
+#     new_user = User(username=username, password=passowrd,devices=json.dumps([device_id]))
+#     db.session.add(new_user)
+#     db.session.commit()
+
+#     return jsonify({"success_message":"User added successfully"}), 201
+
+
+def add_user(username, password):
     existing_user = User.query.filter_by(username=username).first()
 
     if existing_user:
-        return jsonify({"error_message":"User already exists"}), 400
+        return jsonify({"error_message": "User already exists"}), 400
     
-    new_user = User(username=username, password=passowrd,devices=json.dumps([device_id]))
+    new_user = User(username=username, password=password, devices=json.dumps([]))  # Initialize with an empty list
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({"success_message":"User added successfully"}), 201
+    return jsonify({"success_message": "User added successfully"}), 201
 
 
 def perform_user_login(username, password, device_id):
@@ -29,7 +42,7 @@ def perform_user_login(username, password, device_id):
             user.devices = json.dumps(devices)
             db.session.commit()
         else:
-            return jsonify({'message': 'Maximum number of devices reached', 'length':f'length = {len(devices)}'}), 403
+            return jsonify({'message': 'Maximum number of devices reached', 'length(number of devices)':f'length = {len(devices)}'}), 403
 
     return jsonify({'message': 'Logged in successfully', 'user': {'username': user.username, 'devices': user.devices}}), 200
 
