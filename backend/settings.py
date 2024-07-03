@@ -1,14 +1,9 @@
 from flask import Flask,request,jsonify
 from flask_cors import CORS,cross_origin
-from datetime import datetime
-# from message91 import generate_otp
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import JSON
 from flask import Flask,json,Request,jsonify,request
 from flask_cors import CORS
-import random
-import requests
-import pytz
 from sqlalchemy.sql import func
 from dotenv import load_dotenv
 import os
