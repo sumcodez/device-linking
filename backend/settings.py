@@ -11,14 +11,16 @@ from dotenv import load_dotenv
 from flask import Flask,request,jsonify
 from flask_cors import CORS
 import os
-from flask_sqlalchemy import SQLAlchemy,JSON
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import JSON
 
 load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
 #app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI")
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI_VM")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI_VM")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URI_VM_FIRST")
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = True
 app.config['CORS_HEADERS'] = 'Content-Type'
 
@@ -30,7 +32,4 @@ db = SQLAlchemy()
 db.init_app(app)
 with app.app_context():
     db.create_all()
-
-
-
 
